@@ -17,10 +17,18 @@ if uploaded_file:
         df = pd.read_csv(uploaded_file)
     else:
         df = pd.read_excel(uploaded_file)
-    
+
     st.success("✅ File uploaded successfully!")
     
-    # Sidebar Filters
+    # 🔍 Debugging: Print Column Names in Streamlit
+    st.write("🔍 Debugging: File Columns Found →", list(df.columns))  
+
+    # **Check if "Development Area" Exists Before Using It**
+    if "Development Area" not in df.columns:
+        st.error("❌ Error: 'Development Area' column not found! Check your file headers.")
+        st.stop()  # Stop execution here if column is missing
+
+    # Now you can safely use "Development Area"
     st.sidebar.header("Filter Development Areas")
     selected_area = st.sidebar.selectbox("Select Development Area", df["Development Area"].unique())
     df_filtered = df[df["Development Area"] == selected_area]
