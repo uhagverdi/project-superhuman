@@ -24,10 +24,15 @@ if uploaded_file:
     st.write("🔍 Debugging: File Columns Found →", list(df.columns))  
 
     # **Check if "Development Area" Exists Before Using It**
-    if "Development Area" not in df.columns:
-        st.error("❌ Error: 'Development Area' column not found! Check your file headers.")
-        st.stop()  # Stop execution here if column is missing
+# 🔹 Clean column names (remove spaces & fix issues)
+df.columns = df.columns.str.strip()
 
+# 🔹 Check again after cleaning
+st.write("🔍 Updated Column Names →", list(df.columns))
+
+if "Development Area" not in df.columns:
+    st.error("❌ Error: 'Development Area' column not found! Check your file headers.")
+    st.stop()
     # Now you can safely use "Development Area"
     st.sidebar.header("Filter Development Areas")
     selected_area = st.sidebar.selectbox("Select Development Area", df["Development Area"].unique())
