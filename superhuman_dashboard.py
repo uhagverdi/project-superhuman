@@ -30,6 +30,12 @@ df.columns = df.columns.str.strip()
 # 🔹 Check again after cleaning
 st.write("🔍 Updated Column Names →", list(df.columns))
 
+# 🔹 Clean column names (remove spaces & standardize case)
+df.columns = df.columns.str.strip().str.title()  # Convert "development area" → "Development Area"
+
+# 🔹 Check again after cleaning
+st.write("🔍 Final Column Names →", list(df.columns))
+
 if "Development Area" not in df.columns:
     st.error("❌ Error: 'Development Area' column not found! Check your file headers.")
     st.stop()
